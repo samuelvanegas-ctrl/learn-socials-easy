@@ -8,7 +8,7 @@ export function Quiz({
 }: {
   preguntas: Pregunta[];
   onFinalizar: (puntaje: number) => void;
-  puntajePrevio?: number;
+  puntajePrevio?: number | undefined;
 }) {
   const [respuestas, setRespuestas] = useState<Record<number, number>>({});
   const [enviado, setEnviado] = useState(false);
