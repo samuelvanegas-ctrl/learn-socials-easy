@@ -1,0 +1,70 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { grados } from "@/data/curriculum";
+import { Pagina } from "@/components/site-chrome";
+import { porcentajeTema, useProgreso } from "@/hooks/use-progreso";
+
+export const Route = createFileRoute("/grados")({
+  head: () => ({
+    meta: [
+      { title: "Grados 1° a 11° | ParceroEstudio" },
+      {
+        name: "description",
+        content: "Explora los temas de Ciencias Sociales de cada grado, de primaria a media, con su avance.",
+      },
+      { property: "og:title", content: "Grados 1° a 11° | ParceroEstudio" },
+      { property: "og:description", content: "Temas de Ciencias Sociales por grado, de lo más fácil a lo más difícil." },
+    ],
+  }),
+  component: Grados,
+});
+
+function Grados() {
+  const { store } = useProgreso();
+
+  return (
+    <Pagina>
+      <div className="mx-auto max-w-6xl px-4 py-12">
+        <h1 className="font-display text-4xl font-extrabold">Todos los grados</h1>
+        <p className="mt-2 max-w-2xl text-muted-foreground">
+          El recorrido va de lo más sencillo (familia y barrio) a lo más exigente (globalización, derechos humanos
+          y competencias tipo ICFES).
+        </p>
+
+        <div className="mt-10 space-y-10">
+          {(["Primaria", "Bachillerato", "Media"] as const).map((etapa) => (
+            <section key={etapa}>
+              <h2 className="font-display text-2xl font-extrabold text-primary">{etapa}</h2>
+              <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {grados
+                  .filter((g) => g.etapa === etapa)
+                  .map((g) => {
+                    const avance = Math.round(
+                      g.temas.reduce((n, t) => n + porcentajeTema(store[t.id]), 0) / g.temas.length,
+                    );
+                    return (
+                      <Link
+                        key={g.slug}
+                        to="/grado/$slug"
+                        params={{ slug: g.slug }}
+                        className="rounded-2xl border border-border bg-card p-6 shadow-suave transition-shadow hover:shadow-elevada"
+                      >
+                        <div className="flex items-baseline justify-between">
+                          <h3 className="font-display text-xl font-extrabold">{g.nombre}</h3>
+                          <span className="text-sm font-bold text-accent">{avance}%</span>
+                        </div>
+                        <p className="mt-1 text-sm text-muted-foreground">{g.descripcion}</p>
+                        <div className="mt-4 h-2 overflow-hidden rounded-full bg-secondary">
+                          <div className="h-full bg-gradient-sol" style={{ width: `${avance}%` }} />
+                        </div>
+                        <p className="mt-3 text-xs text-muted-foreground">{g.temas.length} temas</p>
+                      </Link>
+                    );
+                  })}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </Pagina>
+  );
+}
