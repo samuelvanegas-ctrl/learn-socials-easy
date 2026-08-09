@@ -24,7 +24,7 @@ export const Route = createFileRoute("/grado/$slug")({
 });
 
 function GradoPagina() {
-  const grado = Route.useLoaderData();
+  const grado = Route.useLoaderData() as Grado;
   const { store } = useProgreso();
 
   return (
