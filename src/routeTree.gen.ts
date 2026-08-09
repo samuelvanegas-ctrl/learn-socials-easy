@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GradosRouteImport } from './routes/grados'
+import { Route as GradoSlugRouteImport } from './routes/grado.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const GradosRoute = GradosRouteImport.update({
   path: '/grados',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GradoSlugRoute = GradoSlugRouteImport.update({
+  id: '/grado/$slug',
+  path: '/grado/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/grados': typeof GradosRoute
+  '/grado/$slug': typeof GradoSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/grados': typeof GradosRoute
+  '/grado/$slug': typeof GradoSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/grados': typeof GradosRoute
+  '/grado/$slug': typeof GradoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/grados'
+  fullPaths: '/' | '/grados' | '/grado/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/grados'
-  id: '__root__' | '/' | '/grados'
+  to: '/' | '/grados' | '/grado/$slug'
+  id: '__root__' | '/' | '/grados' | '/grado/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GradosRoute: typeof GradosRoute
+  GradoSlugRoute: typeof GradoSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GradosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grado/$slug': {
+      id: '/grado/$slug'
+      path: '/grado/$slug'
+      fullPath: '/grado/$slug'
+      preLoaderRoute: typeof GradoSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GradosRoute: GradosRoute,
+  GradoSlugRoute: GradoSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

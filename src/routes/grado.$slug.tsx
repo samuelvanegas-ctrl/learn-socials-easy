@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getGrado } from "@/data/curriculum";
+import { getGrado, type Grado } from "@/data/curriculum";
 import { Pagina } from "@/components/site-chrome";
 import { porcentajeTema, useProgreso } from "@/hooks/use-progreso";
 
