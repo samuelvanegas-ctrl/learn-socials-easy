@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClasesRouteImport } from './routes/clases'
 import { Route as GradosRouteImport } from './routes/grados'
 import { Route as GradoSlugRouteImport } from './routes/grado.$slug'
 import { Route as TemaIdRouteImport } from './routes/tema.$id'
@@ -17,6 +18,11 @@ import { Route as TemaIdRouteImport } from './routes/tema.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClasesRoute = ClasesRouteImport.update({
+  id: '/clases',
+  path: '/clases',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GradosRoute = GradosRouteImport.update({
@@ -37,12 +43,14 @@ const TemaIdRoute = TemaIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clases': typeof ClasesRoute
   '/grados': typeof GradosRoute
   '/grado/$slug': typeof GradoSlugRoute
   '/tema/$id': typeof TemaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clases': typeof ClasesRoute
   '/grados': typeof GradosRoute
   '/grado/$slug': typeof GradoSlugRoute
   '/tema/$id': typeof TemaIdRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clases': typeof ClasesRoute
   '/grados': typeof GradosRoute
   '/grado/$slug': typeof GradoSlugRoute
   '/tema/$id': typeof TemaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/grados' | '/grado/$slug' | '/tema/$id'
+  fullPaths: '/' | '/clases' | '/grados' | '/grado/$slug' | '/tema/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/grados' | '/grado/$slug' | '/tema/$id'
-  id: '__root__' | '/' | '/grados' | '/grado/$slug' | '/tema/$id'
+  to: '/' | '/clases' | '/grados' | '/grado/$slug' | '/tema/$id'
+  id: '__root__' | '/' | '/clases' | '/grados' | '/grado/$slug' | '/tema/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClasesRoute: typeof ClasesRoute
   GradosRoute: typeof GradosRoute
   GradoSlugRoute: typeof GradoSlugRoute
   TemaIdRoute: typeof TemaIdRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clases': {
+      id: '/clases'
+      path: '/clases'
+      fullPath: '/clases'
+      preLoaderRoute: typeof ClasesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/grados': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClasesRoute: ClasesRoute,
   GradosRoute: GradosRoute,
   GradoSlugRoute: GradoSlugRoute,
   TemaIdRoute: TemaIdRoute,
