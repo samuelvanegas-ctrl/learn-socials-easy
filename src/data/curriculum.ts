@@ -1,3 +1,5 @@
+import { extraTemas } from "./curriculum-extra";
+
 export type Pregunta = {
   q: string;
   opciones: string[];
@@ -24,7 +26,7 @@ export type Grado = {
   temas: Tema[];
 };
 
-export const grados: Grado[] = [
+const gradosBase: Grado[] = [
   {
     slug: "1",
     nombre: "Primero",
