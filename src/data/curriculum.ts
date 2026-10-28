@@ -1,3 +1,5 @@
+import { extraTemas } from "./curriculum-extra";
+
 export type Pregunta = {
   q: string;
   opciones: string[];
@@ -24,7 +26,7 @@ export type Grado = {
   temas: Tema[];
 };
 
-export const grados: Grado[] = [
+const gradosBase: Grado[] = [
   {
     slug: "1",
     nombre: "Primero",
@@ -741,6 +743,11 @@ export const grados: Grado[] = [
     ],
   },
 ];
+
+export const grados: Grado[] = gradosBase.map((g) => ({
+  ...g,
+  temas: [...g.temas, ...(extraTemas[g.slug] ?? [])],
+}));
 
 export const getGrado = (slug: string) => grados.find((g) => g.slug === slug);
 export const getTema = (id: string) => {
