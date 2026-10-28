@@ -744,6 +744,11 @@ const gradosBase: Grado[] = [
   },
 ];
 
+export const grados: Grado[] = gradosBase.map((g) => ({
+  ...g,
+  temas: [...g.temas, ...(extraTemas[g.slug] ?? [])],
+}));
+
 export const getGrado = (slug: string) => grados.find((g) => g.slug === slug);
 export const getTema = (id: string) => {
   for (const g of grados) {
