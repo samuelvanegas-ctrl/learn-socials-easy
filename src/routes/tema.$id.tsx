@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getTema, type Grado, type Tema } from "@/data/curriculum";
+import { imagenGrado } from "@/data/imagenes-grado";
 import { Pagina } from "@/components/site-chrome";
 import { Quiz } from "@/components/quiz";
 import { porcentajeTema, useProgreso } from "@/hooks/use-progreso";
@@ -33,8 +34,16 @@ function TemaPagina() {
 
   return (
     <Pagina>
-      <div className="bg-gradient-noche text-primary-foreground">
-        <div className="mx-auto max-w-4xl px-4 py-10">
+      <div className="relative overflow-hidden bg-gradient-noche text-primary-foreground">
+        <img
+          src={imagenGrado(grado.slug)}
+          alt=""
+          width={992}
+          height={672}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-primary/40" />
+        <div className="relative mx-auto max-w-4xl px-4 py-12 md:py-16">
           <Link to="/grado/$slug" params={{ slug: grado.slug }} className="text-sm font-semibold text-accent">
             ← {grado.nombre}
           </Link>
