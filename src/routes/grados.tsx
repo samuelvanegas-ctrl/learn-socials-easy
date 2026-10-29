@@ -5,6 +5,7 @@ import { porcentajeTema, useProgreso } from "@/hooks/use-progreso";
 import primaria from "@/assets/etapa-primaria.jpg";
 import bachillerato from "@/assets/etapa-bachillerato.jpg";
 import media from "@/assets/etapa-media.jpg";
+import { imagenGrado } from "@/data/imagenes-grado";
 
 const imagenesEtapa = { Primaria: primaria, Bachillerato: bachillerato, Media: media };
 
@@ -64,8 +65,10 @@ function Grados() {
                         key={g.slug}
                         to="/grado/$slug"
                         params={{ slug: g.slug }}
-                        className="rounded-2xl border border-border bg-card p-6 shadow-suave transition-shadow hover:shadow-elevada"
+                        className="overflow-hidden rounded-2xl border border-border bg-card shadow-suave transition-shadow hover:shadow-elevada"
                       >
+                        <img src={imagenGrado(g.slug)} alt={`Ilustración de ${g.nombre}`} loading="lazy" width={992} height={672} className="h-32 w-full object-cover" />
+                        <div className="p-6">
                         <div className="flex items-baseline justify-between">
                           <h3 className="font-display text-xl font-extrabold">{g.nombre}</h3>
                           <span className="text-sm font-bold text-accent">{avance}%</span>
@@ -75,6 +78,7 @@ function Grados() {
                           <div className="h-full bg-gradient-sol" style={{ width: `${avance}%` }} />
                         </div>
                         <p className="mt-3 text-xs text-muted-foreground">{g.temas.length} temas</p>
+                        </div>
                       </Link>
                     );
                   })}
