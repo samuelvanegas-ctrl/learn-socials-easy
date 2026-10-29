@@ -2,6 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { grados } from "@/data/curriculum";
 import { Pagina } from "@/components/site-chrome";
 import { porcentajeTema, useProgreso } from "@/hooks/use-progreso";
+import primaria from "@/assets/etapa-primaria.jpg";
+import bachillerato from "@/assets/etapa-bachillerato.jpg";
+import media from "@/assets/etapa-media.jpg";
+
+const imagenesEtapa = { Primaria: primaria, Bachillerato: bachillerato, Media: media };
 
 export const Route = createFileRoute("/grados")({
   head: () => ({
@@ -33,7 +38,20 @@ function Grados() {
         <div className="mt-10 space-y-10">
           {(["Primaria", "Bachillerato", "Media"] as const).map((etapa) => (
             <section key={etapa}>
-              <h2 className="font-display text-2xl font-extrabold text-primary">{etapa}</h2>
+              <div className="relative overflow-hidden rounded-3xl shadow-suave">
+                <img
+                  src={imagenesEtapa[etapa]}
+                  alt={`Ilustración de ${etapa}`}
+                  loading="lazy"
+                  width={992}
+                  height={672}
+                  className="h-40 w-full object-cover md:h-56"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/85 to-transparent" />
+                <h2 className="absolute bottom-4 left-5 font-display text-3xl font-extrabold text-primary-foreground">
+                  {etapa}
+                </h2>
+              </div>
               <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {grados
                   .filter((g) => g.etapa === etapa)

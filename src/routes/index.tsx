@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { grados, totalTemas } from "@/data/curriculum";
 import { Pagina } from "@/components/site-chrome";
 import logo from "@/assets/logo.png.asset.json";
+import hero from "@/assets/hero-sociales.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -66,9 +67,16 @@ function Inicio() {
               ))}
             </dl>
           </div>
-          <div className="flex justify-center">
-            <div className="rounded-3xl bg-background/95 p-8 shadow-elevada">
-              <img src={logo.url} alt="Logo ParceroEstudio" className="w-64" />
+          <div className="relative flex justify-center">
+            <img
+              src={hero}
+              alt="Estudiantes explorando el mapa de Colombia y un globo terráqueo"
+              width={1280}
+              height={960}
+              className="w-full rounded-3xl border-4 border-accent/60 shadow-elevada"
+            />
+            <div className="absolute -bottom-6 -left-4 rounded-2xl bg-background/95 p-3 shadow-elevada">
+              <img src={logo.url} alt="Logo ParceroEstudio" className="w-24" />
             </div>
           </div>
         </div>
